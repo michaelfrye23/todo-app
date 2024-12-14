@@ -1,0 +1,44 @@
+<mat-dialog-content>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <span style="font-size: 30px;">Add Task</span>
+    </div>
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Task Name</mat-label>
+        <input matInput formControlName="name" required />
+        <mat-error *ngIf="taskForm.get('name')?.hasError('required')">
+          Task name is required.
+        </mat-error>
+        <mat-error *ngIf="taskForm.get('name')?.hasError('duplicateName')">
+          Task name already exists.
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description" required />
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Due Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date" required />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+  
+      <mat-radio-group formControlName="priority">
+        <mat-radio-button value="low">Low</mat-radio-button>
+        <mat-radio-button value="medium">Medium</mat-radio-button>
+        <mat-radio-button value="high">High</mat-radio-button>
+      </mat-radio-group>
+
+
+        <mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Cancel</button>
+            <button mat-button type="submit" [disabled]="taskForm.invalid">Add Task</button>
+        </mat-dialog-actions>
+    </form>
+  </mat-dialog-content>
+  
+
+  
